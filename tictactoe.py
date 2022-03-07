@@ -33,11 +33,12 @@ class game:
                 while x < 1 or x > 3:
                     x = int(input("Type in the row (horizontal layer) number player X:\n"))
                     if x < 1 or x > 3:
+                        self.display_board()                        
                         print(self.validation_text)
-                        self.display_board()
                     else:
                         break
             except ValueError:
+                self.display_board()
                 print(self.value_error_text)
             except EOFError:
                 quit()
@@ -49,21 +50,21 @@ class game:
                 while y < 1 or y > 3:        
                     y = int(input("Type in the column (vertical layer) number player X:\n"))
                     if y < 1 or y > 3:
+                        self.display_board()                        
                         print(self.validation_text)
-                        self.display_board()
                     else:
                         break
             except ValueError:
-                print(self.value_error_text)
                 self.display_board()
+                print(self.value_error_text)
             except EOFError:
                 quit()
             else:
                 break
 
         if self.check_taken(x, y):
+            self.display_board()            
             print("\nPlease pick an empty cell.\n")
-            self.display_board()
             self.map_input_X()
         else:
             self.board[x - 1][y - 1] = "x"
@@ -80,11 +81,12 @@ class game:
                 while x < 1 or x > 3:
                     x = int(input("Type in the row (horizontal layer) number player O:\n"))
                     if x < 1 or x > 3:
+                        self.display_board()                        
                         print(self.validation_text)
-                        self.display_board()
                     else:
                         break
             except ValueError:
+                self.display_board()
                 print(self.value_error_text)
             except EOFError:
                 quit()
@@ -97,13 +99,13 @@ class game:
                 while y < 1 or y > 3:        
                     y = int(input("Type in the column (vertical layer) number player O:\n"))
                     if y < 1 or y > 3:
-                        print(self.validation_text)
                         self.display_board()
+                        print(self.validation_text)
                     else:
                         break
             except ValueError:
-                print(self.value_error_text)
                 self.display_board()
+                print(self.value_error_text)
             except EOFError:
                 quit()
             else:
