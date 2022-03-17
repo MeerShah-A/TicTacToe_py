@@ -1,14 +1,18 @@
-import os
+import os, pickle
 
-
+filePath = "TicTacToeData.dat"
 
 class game:
     def __init__(self):
-        self.board = [
-            ["-", "-", "-"], 
-            ["-", "-", "-"], 
-            ["-", "-", "-"]
-        ]
+        if os.path.exists(filePath):
+            file2 = open(filePath, "rb")
+            self.board = pickle.load(file2)
+        else:    
+            self.board = [
+                ["-", "-", "-"], 
+                ["-", "-", "-"], 
+                ["-", "-", "-"]
+            ]
         self.validation_text =  "\nPlease type in a number between 0 and 3\n"
         self.value_error_text = "\nPlease type in an integer!\n"
 
@@ -53,6 +57,17 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError:
+                while True:
+                    save = input("Would you like to save(Y/n)? ")
+                    if save.lower() == "y":
+                        file1 = open(filePath, "wb")
+                        pickle.dump(self.board, file1)
+                        break
+                    elif save.lower() == "n":
+                        os.remove(filePath)
+                        break
+                    else:
+                        print("Please type in y or n.")
                 quit()
             else:
                 break
@@ -107,6 +122,17 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError:
+                while True:
+                    save = input("Would you like to save(Y/n)? ")
+                    if save.lower() == "y":
+                        file1 = open(filePath, "wb")
+                        pickle.dump(self.board, file1)
+                        break
+                    elif save.lower() == "n":
+                        os.remove(filePath)
+                        break
+                    else:
+                        print("Please type in y or n.")
                 quit()
             else:
                 break
@@ -189,6 +215,18 @@ class game:
     def main(self):
         print("You may press ctrl + D to exit at anytime ")
         self.display_board()
+        Xcount = 0
+        Ocount = 0
+        for j in range(3):
+            for i in self.board[j]:
+                if j == "x":
+                    Xcount += 1
+                else:
+                    Ocount += 1
+        if Xcount == Ocount:
+            self.map_input_X()
+        else:
+            self.map_input_O()
         while True:
             self.map_input_X()
             self.check_winner_X()
