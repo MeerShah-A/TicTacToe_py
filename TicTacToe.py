@@ -5,25 +5,40 @@ filePath = "TicTacToeData.dat"
 
 class game:
     def __init__(self):
-        if os.path.exists(filePath): # if user chose to save the game, load the save
-            file2 = open(filePath, "rb")
-            self.board = pickle.load(file2)
-            self.x_count = 0
-            self.o_count = 0
-            for j in range(3):
-                for i in self.board[j]:
-                    if i == "x":
-                        self.x_count += 1
-                    elif i == "o":
-                        self.o_count += 1
-        else:   # load an initialised board
+        if os.path.exists(filePath): # checks if a save file exists
+            while True:
+                loadSave = input("Would you like to load your previously saved game? (y/n) (yes/no)") # User load save selection
+                if loadSave.lower() == "y" or loadSave.lower() == "yes":
+                    file2 = open(filePath, "rb")
+                    self.board = pickle.load(file2)
+                    self.x_count = 0
+                    self.o_count = 0
+                    for j in range(3):
+                        for i in self.board[j]:
+                            if i == "x":
+                                self.x_count += 1
+                            elif i == "o":
+                                self.o_count += 1
+                    break
+                elif loadSave.lower() == "n" or loadSave.lower() == "no":   # load an initialised board
+                    self.board = [
+                        ["-", "-", "-"], 
+                        ["-", "-", "-"], 
+                        ["-", "-", "-"]
+                    ]
+                    self.x_count = 0 # number of x's on the board
+                    self.o_count = 0 # number of o's on the board
+                    break
+                else:
+                    print("Please type y or n or yes or no")
+        else: # if no save file load initialised board
             self.board = [
-                ["-", "-", "-"], 
-                ["-", "-", "-"], 
-                ["-", "-", "-"]
-            ]
-            self.x_count = 0 # number of x's on the board
-            self.o_count = 0 # number of o's on the board
+                        ["-", "-", "-"], 
+                        ["-", "-", "-"], 
+                        ["-", "-", "-"]
+                    ]
+            self.x_count = 0
+            self.o_count = 0 
 
         self.validation_text =  "\nPlease type in a number between 0 and 3\n"
         self.value_error_text = "\nPlease type in an integer!\n"
@@ -72,13 +87,15 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError: # if the user decides to quit the game
-                while True:
+                while self.x_count != 0: # if board is empty don't give save option
                     save = input("Would you like to save(Y/n)? ")
                     if save.lower() == "y":
                         file1 = open(filePath, "wb")
                         pickle.dump(self.board, file1)
                         break
                     elif save.lower() == "n":
+                        if not os.path.exists(filePath):
+                            os.mknod(filePath)
                         os.remove(filePath)
                         break
                     else:
@@ -103,13 +120,15 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError:
-                while True:
+                while self.x_count != 0:
                     save = input("Would you like to save(Y/n)? ")
                     if save.lower() == "y":
                         file1 = open(filePath, "wb")
                         pickle.dump(self.board, file1)
                         break
                     elif save.lower() == "n":
+                        if not os.path.exists(filePath):
+                            os.mknod(filePath)
                         os.remove(filePath)
                         break
                     else:
@@ -151,13 +170,15 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError:
-                while True:
+                while self.x_count != 0:
                     save = input("Would you like to save(Y/n)? ")
                     if save.lower() == "y":
                         file1 = open(filePath, "wb")
                         pickle.dump(self.board, file1)
                         break
                     elif save.lower() == "n":
+                        if not os.path.exists(filePath):
+                            os.mknod(filePath)
                         os.remove(filePath)
                         break
                     else:
@@ -183,13 +204,15 @@ class game:
                 self.display_board()
                 print(self.value_error_text)
             except EOFError:
-                while True:
+                while self.x_count != 0:
                     save = input("Would you like to save(Y/n)? ")
                     if save.lower() == "y":
                         file1 = open(filePath, "wb")
                         pickle.dump(self.board, file1)
                         break
                     elif save.lower() == "n":
+                        if not os.path.exists(filePath):
+                            os.mknod(filePath)
                         os.remove(filePath)
                         break
                     else:
